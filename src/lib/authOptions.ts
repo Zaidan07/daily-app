@@ -1,7 +1,7 @@
-import { prisma } from "./prisma"
-import { AuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { compare } from "bcryptjs"
+import { prisma } from "@/lib/prisma"
+import { AuthOptions } from "next-auth"
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -27,27 +27,27 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
-  session: {
-    strategy: "jwt",
-  },
   pages: {
     signIn: "/login",
+  },
+  session: {
+    strategy: "jwt",
   },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id
-        token.role = user.role as "USER" | "ADMIN"
+        token.role = user.role // pastikan role ada di schema
       }
       return token
     },
     async session({ session, token }) {
-      if (token && session.user) {
-        session.user.id = token.id as string
-        session.user.role = token.role as "USER" | "ADMIN"
+      if (session.user) {
+        session.user.id = token.id
+        session.user.role = token.role
       }
       return session
     },
   },
-  
+  secret: process.env.NEXTAUTH_SECRET, // ini penting!
 }
