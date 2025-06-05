@@ -1,51 +1,62 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { signIn } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Icons } from "@/components/icons"
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Icons } from "@/components/icons";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError("")
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
     const res = await signIn("credentials", {
       email,
       password,
       redirect: false,
-    })
+    });
 
     if (res?.ok) {
-      router.push("/admin")
+      const sessionRes = await fetch("/api/session");
+      const session = await sessionRes.json();
+
+      if (session?.user?.role === "ADMIN") {
+        router.push("/admin");
+      } else {
+        router.push("/user");
+      }
     } else {
-      setError("Email atau password salah")
+      setError("Email atau password salah");
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader>
-          <CardTitle>Login ke Thousand Dream</CardTitle>
+          <CardTitle className="flex justify-center text-2xl">
+            Login ke Thousand Dream
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="mb-2">
+                Email
+              </Label>
               <Input
                 id="email"
                 type="email"
@@ -55,7 +66,9 @@ export default function LoginPage() {
               />
             </div>
             <div>
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="mb-2 mt-2">
+                Password
+              </Label>
               <Input
                 id="password"
                 type="password"
@@ -67,7 +80,7 @@ export default function LoginPage() {
 
             {error && <p className="text-sm text-red-500">{error}</p>}
 
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full mt-5" disabled={loading}>
               {loading ? (
                 <>
                   <Icons.spinner className="animate-spin mr-2 h-4 w-4" />
@@ -81,5 +94,5 @@ export default function LoginPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
