@@ -56,8 +56,12 @@ export default function TodayPage() {
       const updated = await getMyDailies();
       setDailies(updated);
       
-    } catch (err: any) {
-      setError(err.message || "Gagal mengirim daily.");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Gagal mengirim daily.");
+      }
     }
 
     setLoading(false);
