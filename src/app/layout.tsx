@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import RegisterServiceWorker from "@/components/RegisterServiceWorker";
+import ClientSessionProvider from "@/components/Common/ClientSessionProvider";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -27,7 +28,9 @@ export default function RootLayout({
       </head>
       <body className={`${poppins.className}`}>
         <RegisterServiceWorker />
+        <ClientSessionProvider>
         {children}
+        </ClientSessionProvider>
       </body>
     </html>
   );
