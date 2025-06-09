@@ -27,7 +27,7 @@ export default function Navbar() {
     return () => clearInterval(interval);
   }, []);
   return (
-    <header className="w-full flex justify-between items-center p-6 bg-white">
+    <header className="w-full flex justify-between items-center px-[120px] py-3 bg-white">
       <div><Image src={Logo} alt="" width={70} height={70}/></div>
       <div className="text-gray-600 font-mono">{time}</div>
       <DropdownMenu>
@@ -55,7 +55,7 @@ export default function Navbar() {
           <DropdownMenuItem disabled>
             Role: {session?.user?.role}
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })}>
+          <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
             Logout
           </DropdownMenuItem>
         </DropdownMenuContent>

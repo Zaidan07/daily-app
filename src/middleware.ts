@@ -16,8 +16,11 @@ export default withAuth({
       return true
     },
   },
+  pages: {
+    signIn: "/login",
+  }
 })
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/admin/:path*", "/user/:path*"],
-}
+  matcher: ["/((?!login|api|_next|favicon.ico|assets).*)"],
+};

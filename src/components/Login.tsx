@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Icons } from "@/components/icons";
+import Image from "next/image";
+import Logo from "@/assets/logo.png";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -33,8 +35,10 @@ export default function LoginPage() {
 
       if (session?.user?.role === "ADMIN") {
         router.push("/admin");
-      } else {
+      } else if (session?.user?.role === "USER") {
         router.push("/user");
+      } else {
+        router.push("/login");
       }
     } else {
       setError("Email atau password salah");
@@ -44,9 +48,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-600 to-gray-800 px-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader>
+          <div className="flex items-center justify-center">
+            <Image src={Logo} alt="" width={60} height={60} />
+          </div>
           <CardTitle className="flex justify-center text-2xl">
             Login ke Thousand Dream
           </CardTitle>
