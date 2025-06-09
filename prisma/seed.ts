@@ -23,6 +23,24 @@ async function main() {
       password: 'password',
       role: Role.USER,
     },
+    {
+      name: 'Habib',
+      email: 'habib@thousanddream.com',
+      password: 'password',
+      role: Role.USER,
+    },
+    {
+      name: 'Daffa',
+      email: 'daffa@thousanddream.com',
+      password: 'password',
+      role: Role.USER,
+    },
+    {
+      name: 'Afif',
+      email: 'afif@thousanddream.com',
+      password: 'password',
+      role: Role.USER,
+    },
   ];
 
   for (const user of users) {
