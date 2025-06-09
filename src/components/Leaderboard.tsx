@@ -29,7 +29,7 @@ export default function LeaderboardPage() {
   const topThree = leaderboard.slice(0, 3);
   const others = leaderboard.slice(3);
   const podiumOrder = [1, 0, 2];
-  const heightMap = [80, 100, 60];
+  // const heightMap = [80, 100, 60];
 
   return (
     <div className="min-h-screen bg-white p-6">
@@ -41,11 +41,7 @@ export default function LeaderboardPage() {
           if (!user) return null;
 
           return (
-            <div
-              key={user.id}
-              className="flex flex-col items-center"
-              style={{ marginTop: `${100 - heightMap[idx]}px` }}
-            >
+            <div key={user.id} className="flex flex-col items-center">
               <Avatar className="h-16 w-16 mb-2 border-4 border-purple-500">
                 {user.image ? (
                   <AvatarImage src={user.image} alt={user.name} />
@@ -53,14 +49,15 @@ export default function LeaderboardPage() {
                   <AvatarFallback>{user.name[0]}</AvatarFallback>
                 )}
               </Avatar>
+              {/* Podium block */}
               <div
                 className={clsx(
-                  "w-20 text-center rounded-t-lg font-bold py-2",
+                  "w-20 text-center rounded-t-lg font-bold py-2 flex flex-col justify-center",
                   idx === 1
-                    ? "bg-yellow-400"
+                    ? "bg-yellow-400 h-24"
                     : idx === 0
-                    ? "bg-gray-300"
-                    : "bg-amber-600"
+                    ? "bg-gray-300 h-20"
+                    : "bg-amber-600 h-16"
                 )}
               >
                 {idx === 1 ? "🥇" : idx === 0 ? "🥈" : "🥉"}
