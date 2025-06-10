@@ -13,7 +13,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter()
+  const router = useRouter();
 
   const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -46,9 +46,9 @@ export default function ProfilePage() {
         setSuccess(true);
         await update();
         if (session?.user?.role === "ADMIN") {
-          router.push("/admin")
+          router.push("/admin");
         } else {
-          router.push("/user")
+          router.push("/user");
         }
       }
     } catch (error) {
@@ -59,65 +59,69 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-10 bg-white p-6 rounded shadow">
-      <div className="flex flex-col items-center mb-6">
-        <input
-          type="file"
-          accept="image/*"
-          className="hidden"
-          ref={fileInputRef}
-          onChange={handleAvatarChange}
-        />
-        <div
-          onClick={() => fileInputRef.current?.click()}
-          className="cursor-pointer"
-          title="Ganti avatar"
-        >
-          <Avatar className="h-16 w-16 mb-2">
-            {session?.user?.image ? (
-              <AvatarImage src={session.user.image} alt="profile" />
-            ) : (
-              <AvatarFallback>
-                {session?.user?.name?.[0]?.toUpperCase() ?? "?"}
-              </AvatarFallback>
-            )}
-          </Avatar>
-        </div>
-        <p className="text-sm text-gray-500">(Klik avatar untuk mengganti)</p>
-      </div>
-
-      <div className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Username
-          </label>
-          <Input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            disabled={loading}
+    <div className="max-w-lg h-screen mx-auto flex items-center">
+      <div className="w-full bg-white p-6 rounded shadow border">
+        <div className="flex flex-col items-center mb-6">
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            ref={fileInputRef}
+            onChange={handleAvatarChange}
           />
+          <div
+            onClick={() => fileInputRef.current?.click()}
+            className="cursor-pointer"
+            title="Ganti avatar"
+          >
+            <Avatar className="h-16 w-16 mb-2">
+              {session?.user?.image ? (
+                <AvatarImage src={session.user.image} alt="profile" />
+              ) : (
+                <AvatarFallback>
+                  {session?.user?.name?.[0]?.toUpperCase() ?? "?"}
+                </AvatarFallback>
+              )}
+            </Avatar>
+          </div>
+          <p className="text-sm text-gray-500">(Klik avatar untuk mengganti)</p>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Email
-          </label>
-          <Input value={session?.user?.email || ""} disabled />
-        </div>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Username
+            </label>
+            <Input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              disabled={loading}
+            />
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Role
-          </label>
-          <Input value={session?.user?.role || ""} disabled />
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
+            <Input value={session?.user?.email || ""} disabled />
+          </div>
 
-        <Button onClick={handleSave} disabled={loading}>
-          {loading ? "Menyimpan..." : "Simpan"}
-        </Button>
-        {success && (
-          <p className="text-green-600 text-sm">Profil berhasil diperbarui!</p>
-        )}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Role
+            </label>
+            <Input value={session?.user?.role || ""} disabled />
+          </div>
+
+          <Button onClick={handleSave} disabled={loading}>
+            {loading ? "Menyimpan..." : "Simpan"}
+          </Button>
+          {success && (
+            <p className="text-green-600 text-sm">
+              Profil berhasil diperbarui!
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

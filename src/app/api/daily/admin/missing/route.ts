@@ -7,7 +7,6 @@ export async function GET() {
   const todayStart = startOfDay(new Date())
   const todayEnd = endOfDay(new Date())
 
-  // Ambil user ID yang sudah isi daily hari ini
   const dailiesToday = await prisma.daily.findMany({
     where: {
       createdAt: {
@@ -22,13 +21,12 @@ export async function GET() {
 
   const userIdsFilled = dailiesToday.map((entry) => entry.userId)
 
-  // Ambil user (bukan admin) yang belum isi
   const usersNotFilled = await prisma.user.findMany({
     where: {
       id: {
         notIn: userIdsFilled,
       },
-      role: Role.USER, // hanya role user
+      role: Role.USER, 
     },
     select: {
       id: true,

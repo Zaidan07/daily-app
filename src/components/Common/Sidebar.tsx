@@ -1,43 +1,62 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 import {
-  LayoutDashboard,
-  CalendarCheck2,
-  Trophy,
-} from "lucide-react"
+  FaHome,
+  FaTasks,
+  FaTrophy,
+  FaHistory,
+  FaClipboardList,
+} from "react-icons/fa";
+import Image from "next/image";
+import Logo from "@/assets/logo.png";
 
-export default function SidebarAdmin() {
-  const pathname = usePathname()
+interface SidebarProps {
+  role: "ADMIN" | "USER";
+}
 
-  const menu = [
-    { name: "Dashboard", href: "/admin", icon: <LayoutDashboard className="w-4 h-4" /> },
-    { name: "Leaderboard", href: "/admin/leaderboard", icon: <Trophy className="w-4 h-4" /> },
-    { name: "Daily", href: "/admin/daily", icon: <CalendarCheck2 className="w-4 h-4" /> },
-  ]
+const Sidebar = ({ role }: SidebarProps) => {
+  const pathname = usePathname();
+
+  const adminMenu = [
+    { href: "/admin", label: "Dashboard", icon: <FaHome /> },
+    { href: "/admin/leaderboard", label: "Leaderboard", icon: <FaTrophy /> },
+    { href: "/admin/daily", label: "Daily", icon: <FaClipboardList /> },
+  ];
+
+  const userMenu = [
+    { href: "/user", label: "Dashboard", icon: <FaHome /> },
+    { href: "/user/daily", label: "Isi Daily", icon: <FaTasks /> },
+    { href: "/user/leaderboard", label: "Leaderboard", icon: <FaTrophy /> },
+    { href: "/user/history", label: "Riwayat", icon: <FaHistory /> },
+  ];
+
+  const menu = role === "ADMIN" ? adminMenu : userMenu;
 
   return (
-    <aside className="w-64 bg-white border-r h-full p-4">
-      <div className="text-2xl font-bold mb-6">Admin</div>
+    <aside className="w-64 h-screen bg-white p-4 border-r ">
+      <div className="flex items-center justify-center mb-5"><Image src={Logo} alt="" width={70} height={70}/></div>
       <nav className="space-y-2">
         {menu.map((item) => (
           <Link
-            key={item.name}
+            key={item.href}
             href={item.href}
             className={cn(
-              "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
-              pathname === item.href
+              "flex items-center gap-3 px-4 py-2 rounded-mdtransition rounded-2xl",
+              pathname === item.href && "bg-gray-800"
                 ? "bg-gray-100 text-black"
                 : "text-gray-600 hover:bg-gray-50 hover:text-black"
             )}
           >
             {item.icon}
-            {item.name}
+            <span>{item.label}</span>
           </Link>
         ))}
       </nav>
     </aside>
-  )
-}
+  );
+};
+
+export default Sidebar;

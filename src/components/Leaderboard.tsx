@@ -72,11 +72,11 @@ export default function LeaderboardPage() {
       </div>
 
       {/* OTHERS LIST */}
-      <Card className="max-w-md mx-auto bg-[#222] p-0 overflow-hidden rounded-xl">
+      <Card className="max-w-md mx-auto bg-white p-0 overflow-hidden rounded-xl">
         {others.map((user, index) => (
           <div
             key={user.id}
-            className="flex items-center justify-between px-4 py-3 border-b border-gray-700"
+            className="flex items-center justify-between px-4 py-3 border-b border-gray-100"
           >
             <div className="flex items-center gap-3">
               <div className="text-gray-400 w-6 text-right">{index + 4}</div>

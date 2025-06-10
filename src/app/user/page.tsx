@@ -1,13 +1,11 @@
-import Navbar from "@/components/Common/Navbar";
-import { NotificationSetup } from "@/components/Common/NotificationSetup";
-import UserPage from "@/components/User";
+// import Navbar from "@/components/Common/Navbar";
+import UserDashboard from "@/components/DailyActivity";
 
 export default function UserPagePage() {
   return (
     <>
-      <NotificationSetup />
-      <Navbar />
-      <UserPage />
+      {/* <Navbar /> */}
+      <UserDashboard/>
     </>
   );
 }

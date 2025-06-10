@@ -41,6 +41,12 @@ async function main() {
       password: 'password',
       role: Role.USER,
     },
+    {
+      name: 'Yudha',
+      email: 'yudha@thousanddream.com',
+      password: 'password',
+      role: Role.USER,
+    },
   ];
 
   for (const user of users) {

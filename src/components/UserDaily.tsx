@@ -17,7 +17,7 @@ type Daily = {
   completed: boolean;
 };
 
-export default function TodayPage() {
+export default function DailyPage() {
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -55,6 +55,8 @@ export default function TodayPage() {
 
       const updated = await getMyDailies();
       setDailies(updated);
+
+      window.dispatchEvent(new Event("daily-updated"));
       
     } catch (err: unknown) {
       if (err instanceof Error) {

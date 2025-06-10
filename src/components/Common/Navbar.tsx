@@ -9,8 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Image from "next/image";
-import Logo from "@/assets/logo.png";
+
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -28,8 +27,7 @@ export default function Navbar() {
   }, []);
   return (
     <header className="w-full flex justify-between items-center px-[120px] py-3 bg-white">
-      <div><Image src={Logo} alt="" width={70} height={70}/></div>
-      <div className="text-gray-600 font-mono">{time}</div>
+      <div className="text-gray-600 pl-[610px] font-mono">{time}</div>
       <DropdownMenu>
         <DropdownMenuTrigger className="flex items-center gap-2 cursor-pointer">
           <Avatar className="h-8 w-8">
