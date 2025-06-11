@@ -35,7 +35,11 @@
 
     
     const fetchActivity = async (): Promise <void> => {
-      const res = await fetch("/api/user/daily-activity");
+      const res = await fetch("/api/user/daily-activity", {
+        cache: "no-store",
+        method: "GET",
+        credentials: "include",
+      });
       const data = await res.json();
       setActivity(data);
     };

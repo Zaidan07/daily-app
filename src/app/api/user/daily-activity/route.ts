@@ -2,9 +2,10 @@ import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { getServerSession } from "next-auth"
 import { format } from "date-fns"
+import { authOptions } from "@/lib/authOptions"
 
 export async function GET() {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   const userId = session?.user?.id
 
   if (!userId) return NextResponse.json([], { status: 401 })
