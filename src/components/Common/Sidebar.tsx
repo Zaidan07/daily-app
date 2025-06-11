@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
+  FaBell,
   FaHome,
   FaTasks,
   FaTrophy,
@@ -24,6 +25,7 @@ const Sidebar = ({ role }: SidebarProps) => {
     { href: "/admin", label: "Dashboard", icon: <FaHome /> },
     { href: "/admin/leaderboard", label: "Leaderboard", icon: <FaTrophy /> },
     { href: "/admin/daily", label: "Daily", icon: <FaClipboardList /> },
+    { href: "/admin/notification", label: "Custom Notification", icon: <FaBell /> },
   ];
 
   const userMenu = [

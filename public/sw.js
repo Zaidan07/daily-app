@@ -10,10 +10,18 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  event.waitUntil(
-    clients.openWindow("/")
-  );
+  clients.openWindow("/");
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data === "play-sound") {
+    // Notifikasi dari client
+    console.log("Received 'play-sound' event");
+  }
 });
 
 
+
 self.addEventListener("fetch", () => {});
+
+
