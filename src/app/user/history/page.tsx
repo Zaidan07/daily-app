@@ -1,9 +1,9 @@
-import AdminDailyPage from "@/components/Daily";
+import DailyHistory from "@/components/DailyHistory";
 
 export default function AdminDailyPage9() {
   return (
     <>
-      <AdminDailyPage/>
+      <DailyHistory/>
     </>
   );
 }

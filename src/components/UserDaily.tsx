@@ -1,37 +1,23 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { createDaily } from "@/lib/actions/createDaily";
 import { getMyDailies } from "@/lib/actions/getMyDailies";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { format } from "date-fns";
-
-type Daily = {
-  id: string;
-  createdAt: Date;
-  userId: string;
-  date: Date;
-  note: string;
-  completed: boolean;
-};
 
 export default function DailyPage() {
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [dailies, setDailies] = useState<Daily[]>([]);
   const [submittedToday, setSubmittedToday] = useState(false);
 
   useEffect(() => {
     async function fetchDailies() {
       const res = await getMyDailies();
-      setDailies(res);
 
-      const today = new Date();
-      const todayStr = today.toISOString().split("T")[0];
+      const todayStr = new Date().toISOString().split("T")[0];
       const hasToday = res.some((d) =>
         d.createdAt.toISOString().startsWith(todayStr)
       );
@@ -52,12 +38,7 @@ export default function DailyPage() {
       setSuccess(true);
       setNote("");
       setSubmittedToday(true);
-
-      const updated = await getMyDailies();
-      setDailies(updated);
-
       window.dispatchEvent(new Event("daily-updated"));
-      
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -99,26 +80,6 @@ export default function DailyPage() {
                 </Button>
               </form>
             )}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Daftar Daily Kamu :</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {dailies.map((daily) => (
-              <div key={daily.id}>
-                <p className="text-lg text-black font-bold mb-1">
-                  Today {format(new Date(daily.createdAt), "do MMMM yyyy")}
-                </p>
-                <ul className="list-disc pl-5 space-y-1 whitespace-pre-line">
-                  {daily.note.split("\n").map((line, i) => (
-                    <li key={i}>{line}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
           </CardContent>
         </Card>
       </div>
